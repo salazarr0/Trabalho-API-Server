@@ -12,4 +12,13 @@ export class UserData{
             throw new Error(error.message);
         }
     }
+    //exercicio 2
+    buscarFaixaEtaria = (min: Number, max: Number) =>{
+        try{
+            const userFound = users.filter((u) => u.idade >= min && u.idade <= max);
+            return userFound;
+        }catch(error: any){
+            throw new Error(error.message);
+        }
+    }   
 }

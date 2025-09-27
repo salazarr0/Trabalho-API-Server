@@ -34,5 +34,35 @@ export class UserController{
             res.send(error.message);
         }
     }
+    //exercicio 2
+    filtrarFaixaEtaria = (req: Request, res: Response) =>{
+        try{
+            const { min, max } = req.query;
+            if(!min || !max){
+                return res.status(400).json({message: "min e max são obrigatórios!"})
+
+            }
+            const minAge = parseInt(min as string);
+            const maxAge = parseInt(max as string)
+
+            if(isNaN(minAge) || isNaN(maxAge)){
+                return res.status(400).json({message: "min e max devem ser números!"})
+            }
+
+            const users = this.userBusiness.filtrarFaixaEtaria(minAge, maxAge);
+
+            res.send(users);
+        }catch(error: any){
+
+           if(error.message === 'Usuário não encontrado!'){
+                return res.status(404).json({
+                    success: false,
+                    message: 'Usuário não encontrado',
+                    sugestion: "Coloque uma faixa etária menor ex: 'min=20&max=25' "
+                })
+            }
+            res.status(500).json({message: "Erro inexperado"});
+        }
+    }
 
 }

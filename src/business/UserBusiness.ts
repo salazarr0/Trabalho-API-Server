@@ -14,5 +14,14 @@ export class UserBusiness{//exporta a classe
     
             return user;
     }
+    //exercicio 2
+    filtrarFaixaEtaria = (min: Number, max: Number) =>{
+        const users = this.userData.buscarFaixaEtaria(min,max);
+
+        if(users.length === 0){
+            throw new Error("Usuário não encontrado!");
+        }
+        return users;
+    }
     
 }

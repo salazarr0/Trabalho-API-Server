@@ -5,5 +5,6 @@ export const userRouter = express.Router();
 
 const userController = new UserController();
 
+userRouter.get('/age-range', userController.filtrarFaixaEtaria);//exercicio 2 
 
-userRouter.get('/:id', userController.pegarPorID);//exercicio 1
+userRouter.get('/userId/:id', userController.pegarPorID);//exercicio 1
