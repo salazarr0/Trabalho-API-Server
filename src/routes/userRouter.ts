@@ -7,4 +7,6 @@ const userController = new UserController();
 
 userRouter.get('/age-range', userController.filtrarFaixaEtaria);//exercicio 2 
 
+userRouter.put('/:id', userController.atualizarUsuario);//exercicio 4
+
 userRouter.get('/userId/:id', userController.pegarPorID);//exercicio 1
