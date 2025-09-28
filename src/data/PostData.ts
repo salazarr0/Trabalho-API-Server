@@ -19,4 +19,12 @@ export class PostData{
             post[index] = postAtualizado;
         }
     }
+
+    //exercicio 6
+    deletarPost = (id: number) => {
+        const index = post.findIndex((p) => p.id === id);
+        if (index !== -1) {
+            post.splice(index, 1);
+        }
+    }
 }

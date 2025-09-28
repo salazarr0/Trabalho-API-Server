@@ -1,11 +1,17 @@
 import { PostData } from "../data/PostData";
 import { UserData } from "../data/UserData";
 import {Post}from "../bd";
+import { USER_ROLE } from "../bd";
 
 interface AtualizarPostInputDTO {
     title?: string;
     content?: string;
     published?: boolean;
+}
+
+interface DeletarPostInputDTO {
+    postId: number;
+    userId: number;
 }
 
 
@@ -72,6 +78,30 @@ export class PostBusiness{
             postParaAtualizar.published = input.published;
         }
         this.postData.atualizarPost(id, postParaAtualizar);
+    }
+
+    //exercicio 6
+    deletarPost = (input: DeletarPostInputDTO) => {
+        const { postId, userId } = input;
+
+        const postParaDeletar = this.postData.buscarPostPorId(postId);
+        if (!postParaDeletar) {
+            throw new Error("Post não encontrado.");
+        }
+
+        const usuarioQueRequisitou = this.userData.buscarUsuarioPorID(userId);
+        if (!usuarioQueRequisitou) {
+            throw new Error("Usuário não encontrado. Verifique o 'User-Id' enviado.");
+        }
+
+        const ehAdmin = usuarioQueRequisitou.role === USER_ROLE.ADMIN;
+        const ehAutor = postParaDeletar.authorId === usuarioQueRequisitou.id;
+
+        if (!ehAdmin && !ehAutor) {
+            throw new Error("Apenas o autor do post ou administradores podem deletar este post.");
+        }
+
+        this.postData.deletarPost(postId);
     }
 
 }

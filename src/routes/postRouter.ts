@@ -8,3 +8,6 @@ const postController = new PostController();
 postRouter.post('/postUsers', postController.postUsers);//exercicio 3
 
 postRouter.patch('/:id', postController.atualizarPost);//exercicio 5
+
+postRouter.delete('/:id', postController.deletarPost);//exercicio 6
+

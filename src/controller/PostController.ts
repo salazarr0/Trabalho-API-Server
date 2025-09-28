@@ -42,5 +42,37 @@ export class PostController{
             }
         }
     }
+    //exercicio 6
+    deletarPost = (req: Request, res: Response) => {
+        try {
+            const postId = parseInt(req.params.id);
+            const userIdHeader = req.headers['user-id'];
+
+            if (isNaN(postId)) {
+                throw new Error("O 'id' do post deve ser um número.");
+            }
+            if (!userIdHeader) {
+                throw new Error("O header 'User-Id' é obrigatório para autorização.");
+            }
+
+            const userId = parseInt(userIdHeader as string);
+            if (isNaN(userId)) {
+                throw new Error("O header 'User-Id' deve ser um número.");
+            }
+            
+            const input = { postId, userId };
+            this.postBusiness.deletarPost(input);
+            
+            res.status(200).json({ message: "Post deletado com sucesso." });
+        } catch (error: any) {
+            if (error.message.includes("não encontrado")) {
+                res.status(404).json({ error: error.message });
+            } else if (error.message.includes("Apenas o autor")) {
+                res.status(403).json({ error: error.message });
+            } else {
+                res.status(400).json({ error: error.message });
+            }
+        }
+    }
     
 }
