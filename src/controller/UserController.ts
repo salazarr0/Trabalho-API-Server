@@ -93,4 +93,43 @@ export class UserController{
             }
         }
     }
+    //exercicio 7
+     cleanupInactiveUsers = (req: Request, res: Response) => {
+        try {
+            const { confirm } = req.query;
+
+            const usuariosRemovidos = this.userBusiness.cleanupInactiveUsers(confirm);
+
+            res.status(200).json({
+                message: "Limpeza de usuários inativos concluída.",
+                usuariosRemovidos: usuariosRemovidos
+            });
+
+        } catch (error: any) {
+            if (error.message.includes("Confirmação necessária")) {
+                res.status(400).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: "Ocorreu um erro inesperado no servidor." });
+            }
+        }
+    }
+    deletarUsuario = (req: Request, res: Response) => {
+        try {
+            const id = parseInt(req.params.id);
+            if (isNaN(id)) {
+                throw new Error("O 'id' deve ser um número.");
+            }
+            
+            this.userBusiness.deletarUsuario(id);
+            res.status(200).json({ message: "Usuário deletado com sucesso." });
+        } catch (error: any) {
+            if (error.message.includes("não encontrado")) {
+                res.status(404).json({ error: error.message });
+            } else if (error.message.includes("não é permitido")) {
+                res.status(403).json({ error: error.message });
+            } else {
+                res.status(400).json({ error: error.message });
+            }
+        }
+    }
 }

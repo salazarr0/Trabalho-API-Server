@@ -1,4 +1,5 @@
 import {User, users} from '../bd';
+import {Post, post} from '../bd';
 
 export class UserData{
     //exercicio 1
@@ -41,5 +42,23 @@ export class UserData{
         } catch (error: any) {
             throw new Error("Erro ao atualizar usuário no banco de dados.");
         }
-    }   
+    }
+    
+    //exercicio 7
+    buscarTodosOsUsuarios = (): User[] => {
+        return users;
+    }
+
+    substituirTodosOsUsuarios = (novosUsuarios: User[]) => {
+        users.length = 0;
+        users.push(...novosUsuarios);
+    }
+
+    deletarUsuario = (id: number) => {
+        const index = users.findIndex((u) => u.id === id);
+        if (index !== -1) {
+            users.splice(index, 1);
+        }
+    }
+
 }

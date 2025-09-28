@@ -1,7 +1,7 @@
 import { PostData } from "../data/PostData";
 import { UserData } from "../data/UserData";
-import {Post}from "../bd";
-import { USER_ROLE } from "../bd";
+import {Post, post} from "../bd";
+import { User, USER_ROLE } from "../bd";
 
 interface AtualizarPostInputDTO {
     title?: string;
@@ -103,5 +103,5 @@ export class PostBusiness{
 
         this.postData.deletarPost(postId);
     }
-
+    
 }

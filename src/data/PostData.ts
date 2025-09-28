@@ -1,3 +1,4 @@
+import { users, User} from '../bd';
 import {post, Post} from "../bd"
 
 
@@ -26,5 +27,10 @@ export class PostData{
         if (index !== -1) {
             post.splice(index, 1);
         }
+    }
+
+    //exercicio 7
+    buscarTodosOsPosts = (): Post[] => {
+        return post;
     }
 }
