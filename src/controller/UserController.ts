@@ -64,5 +64,33 @@ export class UserController{
             res.status(500).json({message: "Erro inexperado"});
         }
     }
+    //exercicio 4
+    atualizarUsuario = (req: Request, res: Response) => {
+        try {
+            const id = parseInt(req.params.id);
+            
+            const { nome, email, role, idade } = req.body;
+            
+            if(isNaN(id)){
+                throw new Error("O 'id' deve ser um número.");
+            }
 
+            
+            const input = { nome, email, role, idade };
+
+            this.userBusiness.atualizarUsuario(id, input);
+
+            res.status(200).json({ message: "Usuário atualizado com sucesso!" });
+
+        } catch (error: any) {
+            
+            if (error.message.includes("não encontrado")) {
+                res.status(404).json({ error: error.message });
+            } else if (error.message.includes("já está em uso")) {
+                res.status(409).json({ error: error.message });
+            } else {
+                res.status(400).json({ error: error.message });
+            }
+        }
+    }
 }

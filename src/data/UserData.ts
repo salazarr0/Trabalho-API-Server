@@ -1,4 +1,4 @@
-import {users} from '../bd';
+import {User, users} from '../bd';
 
 export class UserData{
     //exercicio 1
@@ -19,6 +19,27 @@ export class UserData{
             return userFound;
         }catch(error: any){
             throw new Error(error.message);
+        }
+    }
+    //exercicio 4
+    buscarUsuarioPorEmail = (email: string) => {
+        try {
+            const userFound = users.find((u) => u.email === email);
+            return userFound;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+    //exercicio 4
+    atualizarUsuario = (id: Number, usuarioAtualizado: User) => {
+        try {
+            const index = users.findIndex((u) => u.id === id);
+
+            if (index !== -1) {
+                users[index] = usuarioAtualizado;
+            }
+        } catch (error: any) {
+            throw new Error("Erro ao atualizar usuário no banco de dados.");
         }
     }   
 }
