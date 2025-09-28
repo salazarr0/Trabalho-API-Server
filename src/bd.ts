@@ -4,6 +4,15 @@ interface Users{
     idade: Number;
 }
 
+export interface Post {
+ id: number;
+ title: string;
+ content: string;
+ authorId: number;
+ createdAt: Date;
+ published: boolean;
+}
+
 export const users: Users[] = [
     {id: 1, nome: "Joao", idade: 15},
     {id: 2, nome: "Maria", idade: 30},
@@ -22,3 +31,5 @@ export const users: Users[] = [
     {id: 16, nome: "Franlkin", idade: 19},
     {id: 17, nome: "Roosevelt", idade: 41}
 ]
+
+export const post:Post[] = [];
